@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: wordpress
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: WORDPRESS_DB_HOST
+        value: db
+      - key: WORDPRESS_DB_USER
+        value: user
+      - key: WORDPRESS_DB_PASSWORD
+        value: password
+      - key: WORDPRESS_DB_NAME
+        value: mydatabase
+
+  - type: private_service
+    name: db
+    env: docker
+    dockerContext: .
+    dockerfilePath: ""
+    image: mysql:5.7
+    envVars:
+      - key: MYSQL_DATABASE
+        value: mydatabase
+      - key: MYSQL_USER
+        value: user
+      - key: MYSQL_PASSWORD
+        value: password
+      - key: MYSQL_ROOT_PASSWORD
+        value: rootpassword
